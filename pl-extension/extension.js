@@ -8,7 +8,7 @@ const io = require('socket.io-client');
  */
 
 let socket = null
-let isChanging = false;
+let messageSent = false;
 const socketUrl = 'http://localhost:3000';
 function activate(context) {
 
@@ -25,7 +25,6 @@ function activate(context) {
 
 		socket.on('connect', () => {
 			vscode.window.showInformationMessage('Verbindung zum Server hergestellt!');
-			socket.emit('messageFromExtension', extractCodeBetweenMarkers(vscode.window.activeTextEditor.document.getText()))
 		});
 
 		socket.on('connect_error', (error) => {
@@ -37,16 +36,21 @@ function activate(context) {
 		});
 
 		socket.on('messageToExtension', (text) => {
-			
+			if(messageSent) {
+				messageSent = false;
+				return
+			}
             updateTextEditor(text);
         });
 
+		socket.emit('newText', 'Hello from VS Code!');
 	});
 
 	let onTypeListener = vscode.workspace.onDidChangeTextDocument((event) => {
 		const text = vscode.window.activeTextEditor.document.getText();
-        if (socket && socket.connected && !isChanging) {
-            socket.emit('messageFromExtension', extractCodeBetweenMarkers(text));
+        if (socket && socket.connected) {
+            socket.emit('messageFromExtension', text);
+			messageSent = true;
         } else {
 			console.log('socket not connected')
 			vscode.window.showErrorMessage('Socket not connected');
@@ -57,20 +61,20 @@ function activate(context) {
 
 }
 
+// This method is called when your extension is deactivated
 function deactivate() { }
 
 function updateTextEditor(data) {
-	isChanging = true;
     const editor = vscode.window.activeTextEditor;
     if (editor) {
         const document = editor.document;
         const fullRange = new vscode.Range(
-            document.positionAt(0), // Start an der ersten Position
-            document.lineAt(document.lineCount - 1).range.end // Bis zum Ende des letzten Texts
+            document.positionAt(0), 
+            document.lineAt(document.lineCount - 1).range.end 
         );
 
         editor.edit(editBuilder => {
-            editBuilder.replace(fullRange, data); // Ersetzt den gesamten Inhalt durch 'data'
+            editBuilder.replace(fullRange, data); 
         }).then(success => {
             if (success) {
                 console.log('Text updated');
@@ -83,19 +87,6 @@ function updateTextEditor(data) {
         });
     } else {
         vscode.window.showErrorMessage('No active text editor');
-    }
-	isChanging = false;
-}
-
-function extractCodeBetweenMarkers(code) {
-    const regex = /pl-start.*?([\s\S]*?)\s*pl-end/;
-  
-    const match = code.match(regex);
-
-    if (match && match[1]) {
-        return match[1].trim().slice(0,-1); 
-    } else {
-        return null; 
     }
 }
 
