@@ -65,12 +65,12 @@ function updateTextEditor(data) {
     if (editor) {
         const document = editor.document;
         const fullRange = new vscode.Range(
-            document.positionAt(0), // Start an der ersten Position
-            document.lineAt(document.lineCount - 1).range.end // Bis zum Ende des letzten Texts
+            document.positionAt(0), 
+            document.lineAt(document.lineCount - 1).range.end 
         );
 
         editor.edit(editBuilder => {
-            editBuilder.replace(fullRange, data); // Ersetzt den gesamten Inhalt durch 'data'
+            editBuilder.replace(fullRange, data); 
         }).then(success => {
             if (success) {
                 console.log('Text updated');

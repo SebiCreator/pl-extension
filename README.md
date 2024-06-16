@@ -1,65 +1,47 @@
-# pl-extension README
+# PL Extension README
 
-This is the README for your extension "pl-extension". After writing up a brief description, we recommend including the following sections.
+## Übersicht
 
-## Features
+PL Extension ist eine JavaScript-Visual-Studio-Code (VS Code) Erweiterung, die zur Kommunikation mit dem PL-Backend verwendet wird. Diese Erweiterung ermöglicht es, Code in VS Code zu schreiben und über WebSockets im Frontend zu sehen und damit zu interagieren.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Voraussetzungen
 
-For example if there is an image subfolder under your extension project workspace:
+	•	Mac: Muss im Debug-Modus gestartet werden.
+	•	Windows: Ähnliche Schritte wie bei Mac, aber verwenden Sie die entsprechenden Tastenkombinationen und stellen Sie sicher, dass Ihre Entwicklungsumgebung richtig konfiguriert ist.
 
-\!\[feature X\]\(images/feature-x.png\)
+## Installation
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Da diese Erweiterung nicht im Microsoft Marketplace bereitgestellt wurde, müssen Sie sie als Entwickler starten.
 
-## Requirements
+	1.	Klonen Sie das Repository:
+    ``` sh
+    git clone <repository-url>
+    cd pl-extension
+    ```
+    2.	Öffnen Sie das Projekt in VS Code:
+    ``` sh
+    code .
+    ```
+## Verwendung
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-## Extension Settings
+	1.	Starten Sie die Erweiterung im Debug-Modus:
+	•	Drücken Sie F5, um das Debugging zu starten. Dadurch wird ein neues VS Code-Entwicklungsfenster geöffnet.
+	2.	Erstellen Sie im neuen Fenster eine neue Datei und schreiben Sie Ihren Code.
+	3.	Schreiben Sie Ihren Code zwischen den Kommentaren #pl-start und #pl-end. Code außerhalb dieser Kommentare wird ignoriert.
+	4.	Kommentare sollten der Syntax der aktuell verwendeten Programmiersprache folgen.
+	5. ***Mac***:	Drücken Sie Cmd + Shift + P, um die Befehlspalette zu öffnen, geben Sie Connect ein und wählen Sie die Connect-Option, um eine Verbindung herzustellen.
+	5. **Windows**	Drücken Sie Ctrl + Shift + P, um die Befehlspalette zu öffnen, geben Sie Connect ein und wählen Sie die Connect-Option, um eine Verbindung herzustellen.
+	6.	Wenn die Verbindung hergestellt ist und das Frontend läuft, sollten alle Änderungen, die Sie am Code vornehmen, synchronisiert werden.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Fehlerbehebung
 
-For example:
+	•	Stellen Sie sicher, dass das Frontend läuft.
+	•	Überprüfen Sie den WebSocket-Verbindungsstatus in der VS Code-Ausgabekonsole.
+	•	Stellen Sie sicher, dass der zu synchronisierende Code innerhalb der Kommentare #pl-start und #pl-end liegt.
 
-This extension contributes the following settings:
+## Hinweise
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+	•	Die Erweiterung muss manuell gestartet werden, da sie nicht Teil des Docker Compose Setups ist wie die anderen Module.
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+	•	Die Synchronisation funktioniert möglicherweise nicht perfekt aufgrund des manuellen Setups und des Debugging-Prozesses.
