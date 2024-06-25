@@ -88,14 +88,14 @@ function updateTextEditor(data) {
 }
 
 function extractCodeBetweenMarkers(code) {
-    const regex = /pl-start.*?([\s\S]*?)\s*pl-end/;
-  
+    const regex = /pl-start\b[\s\S]*?\n([\s\S]*?)\n\s*\*\/\s*pl-end\b/;
+
     const match = code.match(regex);
 
     if (match && match[1]) {
-        return match[1].trim().slice(0,-1); 
+        return match[1].trim().slice(0,-1);
     } else {
-        return null; 
+        return null;
     }
 }
 
