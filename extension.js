@@ -95,7 +95,7 @@ function extractCodeBetweenMarkers(code) {
     if (match && match[1]) {
         return match[1].trim().slice(0,-1);
     } else {
-        return null;
+        return code;
     }
 }
 
